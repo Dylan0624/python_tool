@@ -1,0 +1,10 @@
+.DS_Store
+.tmp.driveupload/
+*.m4a
+__pycache__/
+*.pyc
+.vscode/
+# Separate git repositories
+/Raman/
+/語音轉換QT6/
+/語音轉換/
