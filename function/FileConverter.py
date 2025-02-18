@@ -80,9 +80,7 @@ class FileConverter:
 
         return results
 
-    def get_convertible_formats(
-        self, category: str, subcategory: str = None
-    ) -> List[str]:
+    def get_convertible_formats(self, category: str, subcategory: str = None) -> List[str]:
         """
         獲取指定類別可轉換的格式列表
 
@@ -93,14 +91,22 @@ class FileConverter:
         Returns:
             可轉換的格式列表
         """
-        formats = self.format_manager.get_supported_formats(category)
-        # 排除當前子類別的格式，因為同一子類別內通常不需要轉換
-        if subcategory and category in self.format_manager.formats:
-            current_subcat_formats = self.format_manager.formats[category].get(
-                subcategory, []
-            )
-            formats = [fmt for fmt in formats if fmt not in current_subcat_formats]
-        return formats
+        try:
+            formats = []
+            if category and category in self.format_manager.formats:
+                # 獲取所有該類別下的格式
+                for subcat, extensions in self.format_manager.formats[category].items():
+                    formats.extend(extensions)
+                
+                # 移除當前格式但保留同類型的其他格式
+                if subcategory:
+                    current_format = self.format_manager.formats[category].get(subcategory, [])
+                    formats = [fmt for fmt in formats if fmt != current_format]
+
+            return sorted(list(set(formats)))
+        except Exception as e:
+            self.logger.e('FileConverter', f'Error getting convertible formats: {str(e)}')
+            return []
 
     def convert_files(
         self,
