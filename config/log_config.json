@@ -1,9 +1,0 @@
-{
-    "display_levels": {
-        "DEBUG": true,
-        "INFO": true,
-        "WARNING": true,
-        "ERROR": true,
-        "CRITICAL": true
-    }
-}

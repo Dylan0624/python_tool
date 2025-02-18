@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs
+logs/
+*.log
+
+# Output files
+output/
+converted_files/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+.env
+
+# Virtual Environment
+venv/
+ENV/
+.env/
+.venv/
+
+# Coverage
+.coverage
+coverage.xml
+htmlcov/
+
+# Cache
+.cache/
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# Project specific
+config/*.json
+!config/file_formats.json  # 保留格式配置文件
