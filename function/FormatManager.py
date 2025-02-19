@@ -47,6 +47,10 @@ class FormatManager:
             if self.formats_path.exists():
                 with open(self.formats_path, 'r', encoding='utf-8') as f:
                     formats = json.load(f)
+
+                # 過濾掉 `encoding_formats`，確保遍歷的都是檔案格式
+                formats = {k: v for k, v in formats.items() if isinstance(v, dict) and k != "encoding_formats"}
+
                 self.logger.i(
                     'FormatManager',
                     f'已從 {self.formats_path} 載入格式配置'

@@ -14,7 +14,7 @@ def main():
     converter = FileConverter()
     
     # 測試檔案路徑
-    file_path = '/Users/dylan/Documents/data/image/autotest/00.png'
+    file_path = '/Users/dylan/Documents/data/file/excel/0211_generating組/patinya/音樂後測_qa.csv'
     
     # 1. 分析檔案
     logger.i('Test', f'Analyzing file: {file_path}')
@@ -41,7 +41,7 @@ def main():
         # 選擇目標格式（根據分析結果中的可轉換格式）
         convertible_formats = analysis_result[0].get('convertible_formats', [])
         if convertible_formats:
-            target_format = convertible_formats[0]  # 使用第一個可用的轉換格式
+            target_format = convertible_formats[-6]  # 使用第一個可用的轉換格式
             
             logger.i('Test', f'Converting file to {target_format}')
             conversion_results = converter.convert_files(

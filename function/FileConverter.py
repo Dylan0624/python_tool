@@ -212,7 +212,7 @@ class FileConverter:
             else:
                 output_path = path.with_suffix(target_format)
 
-            # 根據檔案類型調用相應的轉換方法
+            # 根據類別調用轉換函數
             category = format_info['category']
             if category == 'image':
                 success = self._convert_image(path, output_path)
@@ -220,6 +220,8 @@ class FileConverter:
                 success = self._convert_audio(path, output_path)
             elif category == 'video':
                 success = self._convert_video(path, output_path)
+            elif category == 'text':
+                success = self._convert_text(path, output_path)
             else:
                 return {
                     'file_path': file_path,
@@ -306,5 +308,43 @@ class FileConverter:
             self.logger.e(
                 'FileConverter',
                 f'Error converting video {input_path}: {str(e)}'
+            )
+            return False
+
+    def _convert_text(self, input_path: Path, output_path: Path) -> bool:
+        """
+        轉換文字檔案，如 CSV 轉 TXT 等。
+
+        Args:
+            input_path: 原始檔案路徑
+            output_path: 目標檔案路徑
+
+        Returns:
+            轉換是否成功
+        """
+        try:
+            ext = input_path.suffix.lower()
+            # 如果是 CSV，這裡以 pandas 讀取後轉換為 TSV（tab 分隔的純文字檔）為例
+            if ext == ".csv":
+                import pandas as pd
+                df = pd.read_csv(input_path, encoding="utf-8")
+                # 這裡轉換為 TSV 格式，你也可以轉成其他格式（例如直接寫成 txt）
+                df.to_csv(output_path, sep="\t", index=False, encoding="utf-8")
+            else:
+                # 如果是其他文字格式，則直接複製內容
+                with open(input_path, "r", encoding="utf-8") as infile:
+                    content = infile.read()
+                with open(output_path, "w", encoding="utf-8") as outfile:
+                    outfile.write(content)
+
+            self.logger.i(
+                'FileConverter',
+                f'Successfully converted text file: {input_path} -> {output_path}'
+            )
+            return True
+        except Exception as e:
+            self.logger.e(
+                'FileConverter',
+                f'Error converting text file {input_path}: {str(e)}'
             )
             return False
