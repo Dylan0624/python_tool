@@ -1,0 +1,28 @@
+{
+  "audio": {
+    "lossless": [".wav", ".aiff", ".flac", ".ape", ".alac", ".wv", ".tta"],
+    "lossy": [".mp3", ".aac", ".wma", ".ogg", ".m4a", ".oga"],
+    "midi": [".mid", ".midi"]
+  },
+  "video": {
+    "common": [".mp4", ".avi", ".mov", ".wmv", ".flv", ".mkv", ".webm", ".m4v"]
+  },
+  "image": {
+    "raster": [".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tiff", ".webp"],
+    "vector": [".svg", ".eps", ".ai", ".wmf", ".emf"]
+  },
+  "text": {
+    "plain": [".txt", ".log", ".ini", ".conf", ".md", ".py", ".java", ".cpp", ".h", ".c"],
+    "rich": [".rtf", ".doc", ".docx", ".odt"],
+    "markup": [".html", ".htm", ".xml", ".json", ".yaml", ".yml"],
+    "structured": [".csv", ".tsv", ".xls", ".xlsx"]
+  },
+  "encoding_formats": {
+    "standard": [
+      "utf-8", "utf-8-sig", "utf-16", "utf-32",
+      "big5", "gb2312", "gbk", "gb18030",
+      "shift-jis", "euc-jp", "iso-2022-jp",
+      "euc-kr", "ascii", "latin1", "iso-8859-1"
+    ]
+  }
+}
