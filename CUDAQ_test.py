@@ -333,3 +333,84 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+import sys
+import cudaq
+import time
+
+def test_tensornet(qubits):
+    """測試 TensorNet 後端對特定量子比特數的性能"""
+    try:
+        # 設置 TensorNet 後端
+        cudaq.set_target("tensornet")
+
+        # 創建測試電路
+        @cudaq.kernel
+        def circuit():
+            q = cudaq.qvector(qubits)
+            h(q[0])
+            for i in range(1, qubits):
+                x.ctrl(q[0], q[i])
+            mz(q)
+
+        # 記錄起始時間
+        start_time = time.time()
+
+        # 執行測試
+        result = cudaq.sample(circuit)
+
+        # 記錄結束時間
+        end_time = time.time()
+        exec_time = end_time - start_time
+
+        return {
+            "success": True,
+            "exec_time": exec_time,
+            "result": str(result)
+        }
+
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+# 定義量子比特範圍
+start_qubits = 100
+max_qubits = 200
+step = 5
+
+# 顯示測試信息
+print("\n===== CUDA-Q TensorNet 後端擴展性測試 =====")
+print(f"測試範圍: {start_qubits} 到 {max_qubits} 量子比特，步長 {step}")
+
+# 顯示表格標題
+print("\n{:<10} | {:<15} | {:<20}".format(
+    "量子比特數", "執行時間(秒)", "結果"
+))
+print("-" * 50)
+
+# 循環測試不同的量子比特數
+for qubits in range(start_qubits, max_qubits + 1, step):
+    print(f"測試 {qubits} 量子比特...", end="", flush=True)
+
+    # 運行測試
+    result = test_tensornet(qubits)
+
+    if result["success"]:
+        print(f" 成功! 時間: {result['exec_time']:.4f}秒")
+        print("{:<10} | {:<15} | {:<20}".format(
+            qubits,
+            f"{result['exec_time']:.4f}",
+            result['result'][:17] + "..." if len(result['result']) > 20 else result['result']
+        ))
+    else:
+        print(f" 失敗! 錯誤: {result['error']}")
+        print("{:<10} | {:<15} | {:<20}".format(
+            qubits,
+            "失敗",
+            f"錯誤: {str(result['error'])[:17]}..."
+        ))
+
+print("\n測試完成!")
