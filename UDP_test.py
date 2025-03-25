@@ -8,7 +8,7 @@ import dpkt
 
 # 設定參數
 parser = argparse.ArgumentParser(description="PCAP File UDP Packet Sender")
-parser.add_argument("--mbps", type=float, default=1000.0, help="目標傳輸速率 (MB/s)")
+parser.add_argument("--mbps", type=float, default=150.0, help="目標傳輸速率 (MB/s)")
 parser.add_argument("--processes", type=int, default=8, help="使用多少個獨立進程 (CPU 核心)")
 parser.add_argument("--pcap", type=str, default="input/bu25_no6_20250319.pcap", help="PCAP 檔案路徑")
 args = parser.parse_args()
